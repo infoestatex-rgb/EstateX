@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Chat - EstateX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.agent .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .message.agent .message-content::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 15px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid white;
+        }
+
+        .message.user .message-content::before {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 15px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid #667eea;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .typing-indicator::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 15px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid white;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #eee;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quick-questions {
+            padding: 0 20px 20px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .quick-questions h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .quick-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .quick-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1><i class="fas fa-robot"></i> EstateX AI Agent</h1>
+            <p>Më pyet çdo gjë rreth pronave në Kosovë!</p>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="message agent">
+                <div class="message-content">
+                    <p>Përshëndetje! Unë jam Asistenti juaj AI i EstateX. Mund t'ju ndihmoj të gjeni prona, t'ju përgjigjem pyetjeve rreth patundshmërisë në Kosovë, ose t'ju ofroj informacione rreth shërbimeve të EstateX. Çfarë dëshironi të dini?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typing-indicator">
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Shkruani mesazhin tuaj këtu...">
+            <button class="send-btn" id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <div class="quick-questions">
+            <h3>Pyetje të Shpejta:</h3>
+            <div class="quick-btns">
+                <button class="quick-btn" onclick="sendQuickMessage('Sa janë çmimet e pronave që janë të disponueshme në Kosovë?')">Prona në Kosovë</button>
+                <button class="quick-btn" onclick="sendQuickMessage('Cilat janë zonat më të mira për investim?')">Zonat e Investimit</button>
+                <button class="quick-btn" onclick="sendQuickMessage('Si mund të kontaktoj një agjent?')">Kontakto Agjentin</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        // Baza e përgjigjeve
+        const responses = {
+            greeting: [
+                "Përshëndetje! Si mund t'ju ndihmoj sot me kërkimin tuaj për prona?",
+                "Përshëndetje! Jam këtu për t'ju ndihmuar me të gjitha nevojat tuaja për patundshmëri në Kosovë.",
+                "Përshëndetje! Çfarë pyetjesh keni rreth pronave?"
+            ],
+            properties: {
+                kosove: "Këtu janë disa prona të veçanta në Kosovë:\n\n• Penthouse modern – nga €123,000 deri në €1,239,000\n• Vilë luksoze me pishinë & spa – nga €123,000 deri në €1,239,000\n• Shtëpi familjare – nga €123,000 deri në €1,239,000\n\nA keni ndonjë qytet specifik në mendje për të cilin dëshironi të dini më shumë?",
+                prishtina: "Ne kemi disa prona të disponueshme në Prishtinë, përfshirë apartamente moderne dhe penthouse luksozë. Nëse dëshironi të shikoni prona, vazhdoni tek Prona.",
+                prizreni: "Prizreni ofron vila të bukura dhe shtëpi tradicionale. Ne kemi vila luksoze me pishina që fillojnë nga 800,000€.",
+                peja: "Peja ka shtëpi dhe apartamente tërheqëse për familje. Listimet tona përfshijnë shtëpi të rinovuara që fillojnë nga 400,000€.",
+                gjakova: "Gjakova ofron apartamente moderne dhe hapësira tregtare. Ne kemi disa opsione të disponueshme.",
+                ferizaj: "Ferizaji ofron opsione banimi të përballueshme me lidhje të mira me Prishtinën.",
+                mitrovica: "Mitrovica ka opsione të ndryshme prona, përfshirë apartamente dhe shtëpi.",
+                gjilani: "Gjilani ofron lagje të përshtatshme për familje me lloje të ndryshme prona."
+            },
+            prices: {
+                apartment: "Apartamentet në Kosovë variojnë nga 123,000€ deri në 1,239,000€, në varësi të vendndodhjes dhe madhësisë.",
+                villa: "Vilat luksoze zakonisht fillojnë nga 123,000€ dhe mund të arrijnë deri në 1,239,000€ ose më shumë.",
+                house: "Shtëpitë për familje variojnë nga 123,000€ deri në 1,239,000€ në bazë të vendndodhjes dhe gjendjes.",
+                commercial: "Hapësirat tregtare ndryshojnë shumë, nga 123,000€ për zyra të vogla deri në 1,239,000€ për komplekse të mëdha."
+            },
+            investment: "Zonat më të mira për investim në prona në Kosovë përfshijnë Prishtinën (sidomos qendra e qytetit), Prizrenin (potencial turistik) dhe zona në zhvillim si Gjilani dhe Ferizaji. Prishtina ofron fitime më të larta nga qiratë.",
+            contact: "Mund të kontaktoni agjentët tanë duke telefonuar në +383 45 547 384 ose duke dërguar email në info.estatex@gmail.com. Ne gjithashtu kemi zyra në të gjitha qytetet kryesore.",
+            default: "Nuk jam i sigurt për atë pyetje specifike. A mund ta formulojmë ndryshe ose të pyesni rreth pronave, çmimeve, vendndodhjeve, ose shërbimeve tona?"
+        };
+
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'agent'}`;
+
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.innerHTML = `<p>${content}</p>`;
+
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function generateResponse(message) {
+            const lowerMessage = message.toLowerCase();
+
+            // Kontrollo për përshëndetje
+            if (lowerMessage.includes('përshëndetje') || lowerMessage.includes('tungjatjeta') || lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return responses.greeting[Math.floor(Math.random() * responses.greeting.length)];
+            }
+
+            // Kontrollo për kërkime pronash sipas qytetit
+            if (lowerMessage.includes('kosov') || lowerMessage.includes('disponueshme') || lowerMessage.includes('pronat')) {
+                return responses.properties.kosove;
+            }
+            if (lowerMessage.includes('prishtin') || lowerMessage.includes('prishtina')) {
+                return responses.properties.prishtina;
+            }
+            if (lowerMessage.includes('prizren')) {
+                return responses.properties.prizreni;
+            }
+            if (lowerMessage.includes('pej') || lowerMessage.includes('peja')) {
+                return responses.properties.peja;
+            }
+            if (lowerMessage.includes('gjakov') || lowerMessage.includes('gjakova')) {
+                return responses.properties.gjakova;
+            }
+            if (lowerMessage.includes('ferizaj')) {
+                return responses.properties.ferizaj;
+            }
+            if (lowerMessage.includes('mitrovic')) {
+                return responses.properties.mitrovica;
+            }
+            if (lowerMessage.includes('gjilan')) {
+                return responses.properties.gjilani;
+            }
+
+            // Kontrollo për pyetje çmimesh
+            if (lowerMessage.includes('çmim') || lowerMessage.includes('kushton') || lowerMessage.includes('sa kushton') || lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much')) {
+                if (lowerMessage.includes('apartament') || lowerMessage.includes('apartment')) return responses.prices.apartment;
+                if (lowerMessage.includes('vil') || lowerMessage.includes('villa')) return responses.prices.villa;
+                if (lowerMessage.includes('shtëpi') || lowerMessage.includes('house')) return responses.prices.house;
+                if (lowerMessage.includes('tregtar') || lowerMessage.includes('commercial')) return responses.prices.commercial;
+                return "Çmimet e pronave ndryshojnë sipas vendndodhjes, llojit dhe gjendjes. A mund të jeni më specifik për atë që po kërkoni?";
+            }
+
+            // Kontrollo për pyetje investimi
+            if (lowerMessage.includes('investim') || lowerMessage.includes('invest') || lowerMessage.includes('investment')) {
+                return responses.investment;
+            }
+
+            // Kontrollo për pyetje kontakti
+            if (lowerMessage.includes('kontakt') || lowerMessage.includes('agjent') || lowerMessage.includes('telefon') || lowerMessage.includes('contact') || lowerMessage.includes('agent') || lowerMessage.includes('call')) {
+                return responses.contact;
+            }
+
+            // Përgjigja e paracaktuar
+            return responses.default;
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            chatInput.value = '';
+
+            showTyping();
+
+            setTimeout(() => {
+                hideTyping();
+                const response = generateResponse(message);
+                addMessage(response);
+            }, 1500 + Math.random() * 1000); // Vonesë e rastësishme midis 1.5-2.5 sekondave
+        }
+
+        function sendQuickMessage(message) {
+            chatInput.value = message;
+            sendMessage();
+        }
+
+        function goBack() {
+            // Kjo do t'ju ridrejtojë në faqen home.html
+            window.location.href = 'index.html';
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Fokusimi i input-it gjatë ngarkimit
+        window.addEventListener('load', () => {
+            chatInput.focus();
+        });
+    </script>
+</body>
+</html>
