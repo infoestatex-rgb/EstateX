@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstateX - Partneri Juaj i Besuar në Pasuri të Paluajtshme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #e74c3c;
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: #e74c3c;
+        }
+        
+        nav ul li a.active {
+            color: #e74c3c;
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #e74c3c;
+        }
+        
+        /* Main Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+        }
+        
+        .page-header h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .property-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .prishtine .property-header {
+            background: linear-gradient(135deg, #001aff, #a200ff);
+        }
+        
+        .prizeren .property-header {
+            background: linear-gradient(135deg, #002fff, #e0e40e);
+        }
+        
+        .peje .property-header {
+            background: linear-gradient(135deg, #850000, #01575e);
+        }
+        
+        .property-title {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .property-type {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .property-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .property-description {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: #555;
+        }
+        
+        .features-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .features-list {
+            list-style-type: none;
+            flex: 1;
+        }
+        
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .view-properties-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: auto;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .view-properties-btn:hover {
+            background: #c07373;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #7f8c8d;
+            border-top: 1px solid #eee;
+            background: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 15px;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div>
+                    <h1>Estate<span>X</span></h1>
+                    <div class="tagline">Partneri juaj i besuar në pasuri të paluajtshme që nga viti 2010</div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="details.html" class="active">Details</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h2>Prona Luksoze në Dispozicion</h2>
+            <p>Zgjidhni pronën tuaj të ëndrrave në lokacione të privilegjuara</p>
+        </div>
+        
+        <div class="properties-grid">
+            <!-- Prishtinë Card -->
+            <div class="property-card prishtine">
+                <div class="property-header">
+                    <h2 class="property-title">Prishtinë</h2>
+                    <p class="property-type">Penthouse Modern dhe Luksoz</p>
+                </div>
+                <div class="property-content">
+                    <p class="property-description">
+                        Një penthouse modern dhe luksoz në zemër të Prishtinës, projektuar për profesionistë të kërkuar dhe çifte që vlerësojnë komoditetin dhe stilin. Apartamenti ofron dysheme druri premium, kuzhinë moderne të pajisur me të gjitha pajisjet e nevojshme, dhoma të ndriçuara nga dritat natyrore dhe pamje panoramique të qytetit që të lënë pa frymë. Hapësirat janë të dizajnuara me elegancë dhe detaje të rafinuara për një eksperiencë jetese të jashtëzakonshme.
+                    </p>
+                    <h3 class="features-title">Veçoritë e Veçanta</h3>
+                    <ul class="features-list">
+                        <li>Klimatizim i avancuar për rehati maksimale</li>
+                        <li>Vendparkim privat dhe i sigurt</li>
+                        <li>Ashensor modern dhe i qetë</li>
+                        <li>Sistem sigurie 24/7 për paqen tuaj të mendjes</li>
+                    </ul>
+                    <a href="properties.html" class="view-properties-btn">Shiko më shumë prona</a>
+                </div>
+            </div>
+            
+            <!-- Prizeren Card -->
+            <div class="property-card prizeren">
+                <div class="property-header">
+                    <h2 class="property-title">Prizeren</h2>
+                    <p class="property-type">Villë Luksoze me Pishinë Private</p>
+                </div>
+                <div class="property-content">
+                    <p class="property-description">
+                        Villë luksoze dhe e jashtëzakonshme me pishinë private, kopsht të mirë-mbajtur dhe zonë spa, projektuar për familje që kërkojnë rehati, privatësi dhe elegancë. Hapësirat e brendshme kombinojnë dizajn modern me komoditet maksimal, duke përfshirë pajisje të sofistikuara dhe detaje të rafinuara. Pamjet mahnitëse të maleve krijojnë një ambient të qetë dhe të harmonishëm, ideal për jetesë luksoze, relaks dhe pushime të paharrueshme.
+                    </p>
+                    <h3 class="features-title">Veçoritë Kryesore</h3>
+                    <ul class="features-list">
+                        <li>Pishinë private për relaks dhe argëtim</li>
+                        <li>Kopsht i bukur dhe i mirë-mbajtur</li>
+                        <li>Garazh privat për siguri dhe komoditet</li>
+                        <li>Dhomë zjarri për ngrohtësi dhe atmosferë elegante</li>
+                        <li>Sistem Smart Home për kontroll të avancuar të pajisjeve dhe sigurisë</li>
+                        <li>Zonë Spa për relaksim dhe mirëqenie maksimale</li>
+                    </ul>
+                    <a href="properties.html" class="view-properties-btn">Shiko më shumë prona</a>
+                </div>
+            </div>
+            
+            <!-- Pejë Card -->
+            <div class="property-card peje">
+                <div class="property-header">
+                    <h2 class="property-title">Pejë</h2>
+                    <p class="property-type">Shtëpi Komode Familjare</p>
+                </div>
+                <div class="property-content">
+                    <p class="property-description">
+                        Shtëpi komode familjare në një lagje të qetë, ideale për familje që duan të rrisin fëmijët pranë shkollave dhe parqeve. E rinovuar së fundmi me përfundime moderne, kjo shtëpi kombinon rehati, funksionalitet dhe stil të rafinuar.
+                    </p>
+                    <h3 class="features-title">Veçoritë Kryesore</h3>
+                    <ul class="features-list">
+                        <li>Kopsht i bukur për aktivitet dhe relaks</li>
+                        <li>Vendparkim privat</li>
+                        <li>Dhomë magazinimi për organizim dhe komoditet</li>
+                        <li>Rinovim modern me detaje të rafinuara</li>
+                    </ul>
+                    <a href="properties.html" class="view-properties-btn">Shiko më shumë prona</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 EstateX Real Estate. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Shtojmë funksionalitet për butonat e shikimit të pronave
+        document.querySelectorAll('.view-properties-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                alert('Duke ju dërguar në listën e plotë të pronave të disponueshme në të gjitha qytetet!');
+                // Nuk ka nevojë për preventDefault() pasi ne duam që linku të vazhdojë
+            });
+        });
+    </script>
+</body>
+</html>

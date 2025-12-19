@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - EstateX Real Estate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            color: var(--text);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* About Page */
+        .about-hero {
+            padding: 150px 0 80px;
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1973&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .mission, .vision {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .mission h3, .vision h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .mission h3 i, .vision h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        /* CEO Section */
+        .ceo-section {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 60px 0;
+        }
+
+        .ceo-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .ceo-img {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .ceo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .ceo-section:hover .ceo-img img {
+            transform: scale(1.05);
+        }
+
+        .ceo-info {
+            padding: 40px 40px 40px 0;
+        }
+
+        .ceo-info h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        .ceo-title {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .ceo-quote {
+            font-style: italic;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin: 25px 0;
+            color: var(--text);
+        }
+
+        /* Why Choose Us */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Team Section */
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .team-member:hover .member-img img {
+            transform: scale(1.1);
+        }
+
+        .member-info {
+            padding: 20px;
+        }
+
+        .member-info h3 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .member-info .position {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--secondary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--secondary);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .about-content, .contact-container, .ceo-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .mission-vision {
+                grid-template-columns: 1fr;
+            }
+            
+            .ceo-img {
+                height: 300px;
+            }
+            
+            .ceo-info {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--shadow);
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .timeline-item:nth-child(odd)::after, .timeline-item:nth-child(even)::after {
+                left: 21px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>Estate<span>X</span></h1>
+            </div>
+            
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="aboutus.html" class="active">About Us</a></li>
+                </ul>
+            </nav>
+            
+            <div class="mobile-menu" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Rreth EstateX</h1>
+            <p>Partneri juaj i besuar në pasuri të paluajtshme që nga viti 2010</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section>
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="section-title" style="text-align: left;">
+                        <h2>Historia Jonë!</h2>
+                    </div>
+                    <p>EstateX u themelua në vitin 2010 me një mision të thjeshtë: të bëjë blerjen dhe shitjen e pronave në Kosovë më të lehtë, transparente dhe më efikase. Ajo që filloi si një agjenci e vogël në Gjilan është rritur dhe është bërë një nga kompanitë kryesore të pasurive të paluajtshme në Kosovë, me zyra në të gjitha qytetet kryesore.</p>
+                    <p>Gjatë viteve, ne kemi ndihmuar mijëra familje të gjejnë shtëpitë e tyre të ëndrrave dhe kemi asistuar shumë investitorë në marrjen e vendimeve fitimprurëse për pronat. Ekipi ynë i agjentëve të certifikuar kombinon njohuritë e tregut lokal me standardet ndërkombëtare të shërbimit.</p>
+                    <p>Ne besojmë se çdo njeri meriton një vend që mund ta quajë shtëpi, dhe jemi të përkushtuar ta bëjmë këtë ëndërr realitet për klientët tanë përmes zgjidhjeve inovative, shërbimit të personalizuar dhe integritetit të palëkundur.</p>
+                </div>
+                <div class="about-img">
+                    <img src="photo.X/aboutus/shpia1.webp" alt="Our Office">
+                </div>
+            </div>
+            
+            <div class="mission-vision">
+                <div class="mission">
+                    <h3><i class="fas fa-bullseye"></i> Misioni Ynë</h3>
+                    <p>Të thjeshtësojmë procesin e pasurive të paluajtshme dhe të ndihmojmë klientët tanë të marrin vendime të informuara duke ofruar informacion të saktë, udhëzim ekspert, dhe shërbim të personalizuar që tejkalon pritshmëritë.</p>
+                </div>
+                <div class="vision">
+                    <h3><i class="fas fa-eye"></i> Vizioni Ynë</h3>
+                    <p>Të jemi platforma më e besueshme e pasurive të paluajtshme në Kosovë, e njohur për inovacion, transparencë dhe shërbim të jashtëzakonshëm ndaj klientit në lidhjen e njerëzve me pronat e tyre ideale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <!-- Our Values -->
+    <section style="background-color: var(--light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Vlerat Tona</h2>
+                <p>Parimet që udhëheqin gjithçka që bëjmë</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Transparencë</h3>
+                    <p>Ne besojmë në komunikim të hapur dhe zbardhje të plotë në të gjitha transaksionet tona.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-award"></i>
+                    <h3>Cilësi</h3>
+                    <p>Ne ruajmë standardet më të larta në shërbimet dhe listimet tona të pronave.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-heart"></i>
+                    <h3>Kënaqësia e Klientit</h3>
+                    <p>Lumturia e klientëve tanë është matësi ynë përfundimtar i suksesit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+      <!-- Our CEO Section -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Drejtori ynë ekzekutiv</h2>
+                <p>Njihuni me liderin vizionar pas EstateX.</p>
+            </div>
+            
+            <div class="ceo-section">
+                <div class="ceo-content">
+                    <div class="ceo-img">
+                        <img src="https://media.istockphoto.com/id/176221393/photo/businessman-portrait-silhouette-and-a-mysterious-face.jpg?s=612x612&w=0&k=20&c=ptxtuyNZh5rH2TWW3NOHrlhGMZC42d13bnC5VjZG4-Q=" alt="Adonis Shala - CEO">
+                    </div>
+                    <div class="ceo-info">
+                        <h2>Adonis Shala</h2>
+                        <p class="ceo-title">Themelues & Drejtor Ekzekutiv.</p>
+                        <p>Me mbi 15 vite përvojë në industrinë e pasurive të paluajtshme, Adonis Shala e themeloi EstateX në vitin 2010 me një vizion për të revolucionarizuar tregun e pronave në Kosovë. Udhëheqja e tij e ka shndërruar EstateX nga një agjenci e vogël lokale në platformën kryesore të pasurive të paluajtshme në vend.</p>
+                        
+                        <div class="ceo-quote">
+                            "Misioni ynë ka qenë gjithmonë i qartë: të lidhim njerëzit me shtëpitë e tyre të ëndrrave, duke ruajtur standardet më të larta të integritetit dhe shërbimit. Tek EstateX, ne nuk shesim vetëm prona; ne ndërtojmë marrëdhënie dhe ndihmojmë familjet të krijojnë kujtime të paharrueshme.
+                        </div>
+                        
+                        <p>Nën udhëheqjen e Adonisit, EstateX është zgjeruar në 7 zyra në të gjithë Kosovën, ka zbatuar zgjidhje digjitale të avancuara dhe ka ndihmuar mijëra klientë të gjejnë pronat e tyre të përsosura. Ai ka një diplomë Master në Administrim Biznesi dhe është profesionist i certifikuar i pasurive të paluajtshme me akreditim ndërkombëtar.</p>
+                        
+                        <p>Adonis është i përkushtuar thellësisht ndaj zhvillimit të komunitetit dhe udhëheq rregullisht iniciativa për ta bërë pronësinë e shtëpisë më të aksesueshme për familjet e reja dhe blerësit e parë në Kosovë.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Our Team (Updated to 5 members) -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Ekipi Ynë</h2>
+                <p>Njihuni me ekspertët pas EstateX</p>
+            </div>
+            
+            <div class="team">
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="https://media.istockphoto.com/id/176221393/photo/businessman-portrait-silhouette-and-a-mysterious-face.jpg?s=612x612&w=0&k=20&c=ptxtuyNZh5rH2TWW3NOHrlhGMZC42d13bnC5VjZG4-Q=" alt="Adonis Shala">
+                    </div>
+                    <div class="member-info">
+                        <h3>Ajet Ajeti</h3>
+                        <p class="position">Drejtor Menaxhues</p>
+                        <p>Me mbi 15 vjet përvojë në pasuri të paluajtshme, Ajeti udhëheq vizionin dhe strategjinë tonë.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="https://media.istockphoto.com/id/176221393/photo/businessman-portrait-silhouette-and-a-mysterious-face.jpg?s=612x612&w=0&k=20&c=ptxtuyNZh5rH2TWW3NOHrlhGMZC42d13bnC5VjZG4-Q=" alt="Adonis Shala">
+                    </div>
+                    <div class="member-info">
+                        <h3>Muhamed Shala</h3>
+                        <p class="position">Drejtor i Shitjeve</p>
+                        <p>Muhamedi menaxhon ekipin tonë të shitjeve dhe siguron kënaqësinë e klientëve.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="https://media.istockphoto.com/id/176221393/photo/businessman-portrait-silhouette-and-a-mysterious-face.jpg?s=612x612&w=0&k=20&c=ptxtuyNZh5rH2TWW3NOHrlhGMZC42d13bnC5VjZG4-Q=" alt="Adonis Shala">
+                    </div>
+                    <div class="member-info">
+                        <h3>Valton Ramadani</h3>
+                        <p class="position">Agjent i Lartë</p>
+                        <p>Valtoni është i specializuar në prona luksoze dhe pasuri të paluajtshme komerciale.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="https://media.istockphoto.com/id/176221393/photo/businessman-portrait-silhouette-and-a-mysterious-face.jpg?s=612x612&w=0&k=20&c=ptxtuyNZh5rH2TWW3NOHrlhGMZC42d13bnC5VjZG4-Q=" alt="Adonis Shala">
+                    </div>
+                    <div class="member-info">
+                        <h3>Yll Marovca</h3>
+                        <p class="position">Drejtor Marketingu</p>
+                        <p>Ylli mbikëqyr markën tonë dhe praninë digjitale në të gjitha platformat.</p>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Our Journey -->
+    <section style="background-color: var(--light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Udhëtimi Ynë</h2>
+                <p>Arritjet kryesore në historinë e kompanisë sonë</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2010</h3>
+                        <p>EstateX u themelua në Gjilan me një ekip prej 5 personash.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2013</h3>
+                        <p>Zgjeruam veprimtarinë në Prishtinë dhe hapëm zyrën tonë të dytë.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2015</h3>
+                        <p>Lansuam faqen tonë të internetit dhe platformën digjitale të pronave.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2018</h3>
+                        <p>Arritëm mbi 1,000+ transaksione të suksesshme të pronave.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2020</h3>
+                        <p>Zgjeruam veprimtarinë në të gjitha qytetet kryesore të Kosovës me 7 zyra.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2023</h3>
+                        <p>Lansuam aplikacionin mobil dhe funksionalitetet e vizitave virtuale.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2024</h3>
+                        <p>Hapëm zyrat tona të reja në Ferizaj dhe Prizren me teknologji të re.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2025</h3>
+                        <p>Arritëm 7,000+ transaksione të suksesshme dhe filluam zgjerimin rajonal.</p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </section>
+
+    <!-- Footer -->
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 EstateX. Të gjitha të drejtat e rezervuara.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('show');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties - EstateX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            color: var(--text);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .admin-btn {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Filters */
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            align-self: flex-end;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Properties Grid */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .property-content {
+            padding: 20px;
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .property-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .property-features {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .property-feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .property-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status-sale {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rent {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-sold {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .no-properties {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .no-properties h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .no-properties p {
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Estate<span>X</span></h1>
+                </div>
+                <div class="nav-links">
+                    <a href="home.html">Home</a>
+                    <a href="properties.html" style="color: var(--secondary);">Properties</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 30px; color: var(--primary);">Our Properties</h1>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="search">Search</label>
+                <input type="text" id="search" placeholder="Search properties...">
+            </div>
+            <div class="filter-group">
+                <label for="city">City</label>
+                <select id="city">
+                    <option value="">All Cities</option>
+                    <option value="Prishtinë">Prishtinë</option>
+                    <option value="Prizren">Prizren</option>
+                    <option value="Pejë">Pejë</option>
+                    <option value="Gjakovë">Gjakovë</option>
+                    <option value="Ferizaj">Ferizaj</option>
+                    <option value="Mitrovicë">Mitrovicë</option>
+                    <option value="Gjilan">Gjilan</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="type">Type</label>
+                <select id="type">
+                    <option value="">All Types</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="villa">Villa</option>
+                    <option value="house">House</option>
+                    <option value="commercial">Commercial</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option value="">All Status</option>
+                    <option value="sale">For Sale</option>
+                    <option value="rent">For Rent</option>
+                </select>
+            </div>
+            <button class="search-btn" id="apply-filters">Search</button>
+        </div>
+
+        <!-- Properties Grid -->
+        <div class="properties-grid" id="properties-container">
+            <!-- Properties will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Function to get properties from localStorage
+        function getProperties() {
+            const stored = localStorage.getItem('estatex_properties');
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        // Function to display properties
+        function displayProperties(properties = null) {
+            const container = document.getElementById('properties-container');
+            const propertiesToShow = properties || getProperties();
+            
+            if (propertiesToShow.length === 0) {
+                container.innerHTML = `
+                    <div class="no-properties">
+                        <h3>No Properties Found</h3>
+                        <p>There are no properties available at the moment.</p>
+                        <p>Check back later or contact us for more information.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            propertiesToShow.forEach(property => {
+                // Skip sold properties from public view
+                if (property.status === 'sold') return;
+
+                const statusText = property.status === 'sale' ? 'For Sale' : 
+                                 property.status === 'rent' ? 'For Rent' : 'Sold';
+                
+                const statusClass = property.status === 'sale' ? 'status-sale' : 
+                                  property.status === 'rent' ? 'status-rent' : 'status-sold';
+
+                html += `
+                    <div class="property-card">
+                        <img src="${property.image_url || 'https://via.placeholder.com/400x300?text=Property+Image'}" 
+                             alt="${property.title}" class="property-image">
+                        <div class="property-content">
+                            <div class="property-price">€${property.price.toLocaleString()}</div>
+                            <h3 class="property-title">${property.title}</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                ${property.location}, ${property.city}
+                            </div>
+                            <div class="property-features">
+                                ${property.beds ? `<div class="property-feature"><i class="fas fa-bed"></i> ${property.beds} Beds</div>` : ''}
+                                ${property.baths ? `<div class="property-feature"><i class="fas fa-bath"></i> ${property.baths} Baths</div>` : ''}
+                                ${property.area ? `<div class="property-feature"><i class="fas fa-ruler-combined"></i> ${property.area}m²</div>` : ''}
+                            </div>
+                            <div class="property-status ${statusClass}">${statusText}</div>
+                            <p>${property.description.substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Function to apply filters
+        function applyFilters() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const cityFilter = document.getElementById('city').value;
+            const typeFilter = document.getElementById('type').value;
+            const statusFilter = document.getElementById('status').value;
+
+            const allProperties = getProperties();
+            
+            const filteredProperties = allProperties.filter(property => {
+                const matchesSearch = property.title.toLowerCase().includes(searchTerm) || 
+                                     property.description.toLowerCase().includes(searchTerm) ||
+                                     property.location.toLowerCase().includes(searchTerm);
+                const matchesCity = !cityFilter || property.city === cityFilter;
+                const matchesType = !typeFilter || property.type === typeFilter;
+                const matchesStatus = !statusFilter || property.status === statusFilter;
+                
+                return matchesSearch && matchesCity && matchesType && matchesStatus;
+            });
+
+            displayProperties(filteredProperties);
+        }
+
+        // Event listeners when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display all properties initially
+            displayProperties();
+
+            // Filter event listeners
+            document.getElementById('apply-filters').addEventListener('click', applyFilters);
+            
+            // Also apply filters when Enter is pressed in search
+            document.getElementById('search').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    applyFilters();
+                }
+            });
+
+            // Auto-apply filters when dropdowns change
+            document.getElementById('city').addEventListener('change', applyFilters);
+            document.getElementById('type').addEventListener('change', applyFilters);
+            document.getElementById('status').addEventListener('change', applyFilters);
+        });
+    </script>
+</body>
+</html>
