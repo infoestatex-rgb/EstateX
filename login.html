@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstateX - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .login-box h2 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .login-box p {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .login-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .login-card {
+            padding: 30px 20px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-card:hover,
+        .login-card.active {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        .login-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .login-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .demo-credentials {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .demo-credentials strong {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <h1>Estate<span>X</span></h1>
+            </div>
+            
+            <h2>Welcome to EstateX</h2>
+            <p>Please select how you want to continue</p>
+            
+            <div class="login-type">
+                <div class="login-card active" id="visitor-card">
+                    <i class="fas fa-user"></i>
+                    <h3>Continue as Visitor</h3>
+                    <p>Browse properties without an account</p>
+                </div>
+                
+                <div class="login-card" id="admin-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Admin Login</h3>
+                    <p>Access admin dashboard</p>
+                </div>
+            </div>
+            
+            <!-- Visitor Form -->
+            <div class="form-container active" id="visitor-form">
+                <div class="demo-credentials">
+                    <p><strong>Note:</strong> As a visitor, you can browse properties without logging in.</p>
+                </div>
+                <button class="btn" id="continue-visitor">
+                    <i class="fas fa-home"></i> Continue to Website
+                </button>
+            </div>
+            
+            <!-- Admin Form -->
+            <div class="form-container" id="admin-form">
+                <div id="login-alert" class="alert"></div>
+                
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-sign-in-alt"></i> Login as Admin
+                    </button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const visitorCard = document.getElementById('visitor-card');
+        const adminCard = document.getElementById('admin-card');
+        const visitorForm = document.getElementById('visitor-form');
+        const adminForm = document.getElementById('admin-form');
+        const continueVisitorBtn = document.getElementById('continue-visitor');
+        const adminLoginForm = document.getElementById('admin-login-form');
+        const loginAlert = document.getElementById('login-alert');
+
+        // Toggle between visitor and admin login
+        visitorCard.addEventListener('click', function() {
+            visitorCard.classList.add('active');
+            adminCard.classList.remove('active');
+            visitorForm.classList.add('active');
+            adminForm.classList.remove('active');
+            loginAlert.style.display = 'none';
+        });
+
+        adminCard.addEventListener('click', function() {
+            adminCard.classList.add('active');
+            visitorCard.classList.remove('active');
+            adminForm.classList.add('active');
+            visitorForm.classList.remove('active');
+        });
+
+        // Continue as visitor
+        continueVisitorBtn.addEventListener('click', function() {
+            // Store visitor status in localStorage
+            localStorage.setItem('userType', 'visitor');
+            localStorage.setItem('loginTime', Date.now());
+            
+            // Redirect to main website
+            window.location.href = 'index.html';
+        });
+
+        // Admin login form submission
+        adminLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            // Validate credentials
+            if (!username || !password) {
+                showAlert('Please enter both username and password', 'error');
+                return;
+            }
+            
+            // Check admin credentials (hardcoded for demo)
+            const validAdmins = {
+                'EstateX': 'realEstate930',
+            };
+            
+            if (validAdmins[username] && validAdmins[username] === password) {
+                // Store admin status in localStorage
+                localStorage.setItem('userType', 'admin');
+                localStorage.setItem('adminUser', username);
+                localStorage.setItem('loginTime', Date.now());
+                
+                // Show success message
+                showAlert('Login successful! Redirecting to admin panel...', 'success');
+                
+                // Redirect to admin panel after 1 second
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1000);
+            } else {
+                showAlert('Invalid credentials. Please try again.', 'error');
+            }
+        });
+
+        // Show alert function
+        function showAlert(message, type = 'error') {
+            loginAlert.textContent = message;
+            loginAlert.className = `alert ${type}`;
+            loginAlert.style.display = 'block';
+            
+            setTimeout(() => {
+                loginAlert.style.display = 'none';
+            }, 5000);
+        }
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const userType = localStorage.getItem('userType');
+            const loginTime = localStorage.getItem('loginTime');
+            
+            // Check session validity (24 hours)
+            if (userType && loginTime) {
+                const sessionAge = Date.now() - parseInt(loginTime);
+                if (sessionAge < 24 * 60 * 60 * 1000) {
+                    // Session is valid, redirect based on user type
+                    if (userType === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                } else {
+                    // Session expired, clear storage
+                    localStorage.clear();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
